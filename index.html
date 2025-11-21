@@ -350,6 +350,42 @@
                 transform: translateX(-50%) translateY(-5px);
             }
         }
+        /* ===== Vidéo === */
+           .sota{
+      font-family: Times new roman, sans-serif;
+      margin: 20px;
+    }
+
+    h1 {
+      text-align: left;
+      margin-bottom: 20px;
+    }
+
+    .video-scroller {
+      overflow-x: auto; /* scroll horizontal */
+      padding: 10px;
+      scroll-behavior: smooth;
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 180px); /* 5 colonnes */
+      grid-template-rows: 1fr;                 /* 1 ligne */
+      gap: 15px;
+    }
+
+    .video-grid video {
+      width: 100%;
+      height: 300px;       /* vertical rectangle */
+      object-fit: cover;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .video-grid video:hover {
+      transform: scale(1.05);
+            }
 
         /* ====== SECTIONS ====== */
         .sec { 
@@ -1174,7 +1210,20 @@
             <div>Découvrir la plateforme</div>
         </div>
     </header>
-
+    
+    <section class="sota">
+  <h1>Ino Malaza<br/>
+Gasikara Soma</h1>
+  <div class="video-scroller">
+    <div class="video-grid">
+      <video src="video1.mp4" controls></video>
+      <video src="video2.mp4" controls></video>
+      <video src="video3.mp4" controls></video>
+      <video src="video4.mp4" controls></video>
+      <video src="video5.mp4" controls></video>
+    </div>
+  </div>
+    </section>
     <!-- Section Jeux Principaux -->
     <section class="sec">
         <h2>Gasikara<br>Soma Video Game</h2>
@@ -1462,6 +1511,42 @@
             ]
         };
 
+
+
+const scroller = document.querySelector('.video-scroller');
+
+    let scrollAmount = 0;
+    const scrollStep = 2; // vitesse du scroll automatique
+    let isUserScrolling = false;
+    let scrollTimeout;
+
+    function autoScroll() {
+      if (!isUserScrolling) {
+        scrollAmount += scrollStep;
+        if (scrollAmount >= scroller.scrollWidth - scroller.clientWidth) {
+          scrollAmount = 0; // revient au début
+        }
+        scroller.scrollLeft = scrollAmount;
+      }
+      requestAnimationFrame(autoScroll);
+    }
+
+    // Détecte le scroll manuel
+    scroller.addEventListener('scroll', () => {
+      isUserScrolling = true;
+      clearTimeout(scrollTimeout);
+
+      // Reprendre le scroll auto après 2s d'inactivité
+      scrollTimeout = setTimeout(() => {
+        isUserScrolling = false;
+        scrollAmount = scroller.scrollLeft; // reprendre là où l'utilisateur a scrollé
+      }, 2000);
+    });
+
+    autoScroll>();
+
+
+        
         // =============================================
         // FONCTIONS PRINCIPALES
         // =============================================
